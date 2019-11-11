@@ -1,0 +1,69 @@
+body {
+    font-family: Helvetica, Arial, sans-serif;
+}
+
+.container {
+    
+    display: grid;
+    grid-template-columns: 6em 81em;
+    grid-template-rows: 7em 41em;
+    grid-template-areas: 
+    "header header"
+    "sidebar main";
+    background-color: whitesmoke;
+    width: 87em
+}
+
+.header {
+    grid-area: header;
+    background-color: lightpink;
+}
+
+h1 {
+    grid-area: header;
+    align-self: center;
+    justify-self: center;
+    color: lightsalmon;
+    text-shadow: 2px 2px 4px white;
+    text-align: center;
+}
+
+.sidebar {
+    background-color: lightskyblue;
+    grid-area: sidebar;    
+}
+
+.sidebar-container{
+    grid-area: sidebar;
+    display: grid;
+    grid-template-rows: repeat(3, 7em);
+    margin-left: 0.4em;
+    margin-right: 1.4em;
+    font-size: 1em;
+    align-self: center;
+   
+}
+
+.memotest-container4{
+    display: grid;
+    grid-area: main;
+    grid-template-columns: repeat(4, 20em);
+    grid-template-rows: repeat(4, 10em);
+    justify-content: space-evenly;
+    align-content: space-evenly;
+
+}
+
+img {
+    width: 20em;
+    height: 10em;
+}
+
+.bloquear-mouse {
+    pointer-events: none
+}
+
+.oculto {
+    display: none;
+    grid-area: main;
+}
