@@ -112,7 +112,7 @@ function revisarVictoria() {
 
 function realizarComparacion(valor1, valor2) {
     if (compararCartas(valor1, valor2)) {
-        exitosRestantes -= 1
+        juego.exitosRestantes -= 1
         revisarVictoria()
         vaciarCartas()
         desbloquearMouse()
