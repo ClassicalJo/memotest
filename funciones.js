@@ -12,35 +12,55 @@ function shuffle(array) {
 }
 
 function generarTablero(cantidad) {
-    exitos = 0
     for (let i = 1; i <= cantidad; i++) {
-        arrayJuego.push(Math.ceil(i/2))
+        arrayJuego.push(Math.ceil(i / 2))
     }
-    for (let i = 1; i <= cantidad; i++) {
-        $div = document.createElement("div")
-        $div.setAttribute("onclick", "verCarta(event)")
-        $div.className = "item"
-        $div.id = `carta${i}`
+    for (let i = 0; i < cantidad; i++) {
+        let $carta = document.createElement("div")
+            $carta.className = "atrac"
+            $carta.id = `atrac${i}`
+            $carta.setAttribute("onclick", "verCarta(event)")
+
+            let $cartaReverso = document.createElement("div")
+
+            $cartaReverso.className = 'carta-reverso'
+
+            let $cartaInterno = document.createElement("div")
+            $cartaInterno.className = "carta-interno"
+
+            let $cartaFrente = document.createElement("div")
+
+            $cartaFrente.className = "carta-frente"
+            $cartaFrente.id = `${i}`
+
+            let $img = document.createElement("img")
+            $img.src = "images/star.jpg"
+
+            let $foto = document.createElement('img')
+            $foto.id = `foto${i}`
 
 
-        $img = document.createElement("img")
-        $img.src = "images/star.jpg"
-        $div.appendChild($img)
-        $memoTest.appendChild($div)
+            $cartaFrente.appendChild($img)
+
+            $cartaReverso.appendChild($foto)
+            $cartaInterno.appendChild($cartaFrente)
+            $cartaInterno.appendChild($cartaReverso)
+
+            $carta.appendChild($cartaInterno)
+
+            $memoTest.appendChild($carta)
     }
 }
 
-function darVuelta(carta) {
-    $carta = document.querySelector(`#${event.path[1].id} img`)
-
-    if (carta === 1) { $carta.src = "images/rose.jpg" }
-    else if (carta === 2) { $carta.src = "images/amet.png" }
-    else if (carta === 3) { $carta.src = "images/perl.png" }
-    else if (carta === 4) { $carta.src = "images/ruby.png" }
-    else if (carta === 5) { $carta.src = "images/saph.png" }
-    else if (carta === 6) { $carta.src = "images/lapi.png" }
-    else if (carta === 7) { $carta.src = "images/peri.jpg" }
-    else if (carta === 8) { $carta.src = "images/bism.png" }
+function darVuelta(carta, reverso) {
+    if (carta === 1) { reverso.src = "images/rose.jpg" }
+    else if (carta === 2) { reverso.src = "images/amet.png" }
+    else if (carta === 3) { reverso.src = "images/perl.png" }
+    else if (carta === 4) { reverso.src = "images/ruby.png" }
+    else if (carta === 5) { reverso.src = "images/saph.png" }
+    else if (carta === 6) { reverso.src = "images/lapi.png" }
+    else if (carta === 7) { reverso.src = "images/peri.png" }
+    else if (carta === 8) { reverso.src = "images/bism.png" }
 }
 
 function compararCartas(valor1, valor2) {
@@ -53,29 +73,40 @@ function compararCartas(valor1, valor2) {
 }
 
 verCarta = function (event) {
-    if (hold === false) {
-        cartaClickeada1 = event.path[1].id
-        carta1 = tablero[cartaClickeada1]
-        bloquearCarta1(cartaClickeada1)
-        darVuelta(carta1)
-        hold = true
+    let $darVuelta = document.querySelector(`#${event.path[3].id}`)
+    $darVuelta.classList.add('carta')
+    $darVuelta.removeAttribute("onclick")
+    let $reverso = document.querySelector(`#${event.path[2].childNodes[1].childNodes[0].id}`)
+
+    if (juego.esperar === false) {
+        juego.carta1 = arrayJuego[event.path[1].id]
+        juego.cartaClickeada1 = $darVuelta
+        juego.imagen1 = $reverso
+        darVuelta(juego.carta1, $reverso)
+        juego.esperar = true
     }
     else {
-        cartaClickeada2 = event.path[1].id
-        carta2 = tablero[cartaClickeada2]
-        darVuelta(carta2)
-        bloquearCarta2(cartaClickeada2)
-        bloquearMouse()
-        setTimeout(function () { realizarComparacion(carta1, carta2) }, 2000)
-        hold = false
+        juego.carta2 = arrayJuego[event.path[1].id]
+        juego.cartaClickeada2 = $darVuelta
+        juego.imagen2 = $reverso
+        darVuelta(juego.carta2, $reverso)
+        juego.esperar = false
     }
-}
 
+    if (juego.cartaClickeada2 !== null) {
+        bloquearMouse()
+        setTimeout(function () { realizarComparacion(juego.carta1, juego.carta2) }, 2000)
+    }
+
+}
 function revisarVictoria() {
-    if (exitosRestantes === 0) {
-        document.querySelector(".oculto").textContent = "ganaste SOS LO MAS"
-        document.querySelector(".oculto").className = "victoria"
-        document.querySelector(".memotest-container").className = "oculto"
+    if (juego.exitosRestantes === 0) {
+        $memoTest.innerHTML = ''
+        $container = document.querySelector('.container')
+        $h2 = document.createElement("h2")
+        $h2.textContent = "VICTORIA!"
+        $h2.className = "victoria"
+        $container.appendChild($h2)
     }
 }
 
@@ -83,37 +114,38 @@ function realizarComparacion(valor1, valor2) {
     if (compararCartas(valor1, valor2)) {
         exitosRestantes -= 1
         revisarVictoria()
+        vaciarCartas()
+        desbloquearMouse()
     }
     else {
-        document.querySelector(`#${cartaClickeada1} img`).src = "images/star.jpg"
-        document.querySelector(`#${cartaClickeada2} img`).src = "images/star.jpg"
-        desbloquear(bloqueo1)
-        desbloquear(bloqueo2)
+        juego.cartaClickeada1.classList.remove("carta")
+        juego.cartaClickeada2.classList.remove("carta")
+
+        setTimeout(function () {
+            juego.imagen1.src = ""
+            juego.cartaClickeada1.setAttribute("onclick", "verCarta(event)")
+            juego.imagen2.src = ""
+            juego.cartaClickeada2.setAttribute("onclick", "verCarta(event)")
+            vaciarCartas()
+            desbloquearMouse()
+        }, 250)
     }
-    desbloquearMouse()
+
 }
 
+
+function vaciarCartas() {
+    juego.carta1 = null
+    juego.carta2 = null
+    juego.cartaClickeada1 = null
+    juego.cartaClickeada2 = null
+    juego.imagen1 = null
+    juego.imagen2 = null
+}
 function bloquearMouse() {
     $memoTest.classList.add("bloquear-mouse")
 }
 
 function desbloquearMouse() {
     $memoTest.classList.remove("bloquear-mouse")
-}
-
-function bloquearCarta1(selector) {
-    $objetivo = document.querySelector(`#${selector}`)
-    $objetivo.onclick = ''
-    bloqueo1 = selector
-}
-
-function bloquearCarta2(selector) {
-    $objetivo = document.querySelector(`#${selector}`)
-    $objetivo.onclick = ''
-    bloqueo2 = selector
-}
-
-function desbloquear(target) {
-    $objetivo = document.querySelector(`#${target}`)
-    $objetivo.onclick = verCarta
 }

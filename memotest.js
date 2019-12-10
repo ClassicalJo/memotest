@@ -1,95 +1,25 @@
 let arrayJuego = [];
-let tablero = {};
-let carta1 = null
-let carta2 = null
-let hold = false
-let $body = document.querySelector("body")
-let exitosRestantes
-let bloqueo1 = null
-let bloqueo2 = null
-let cartaClickeada1 = null
-let cartaClickeada2 = null
-
-let nombre = null
-let dificultad = 16
-let difficulty = 16
-
+let juego = {
+    carta1: null,
+    carta2: null,
+    imagen1: null,
+    imagen2: null,
+    cartaClickeada1: null,
+    cartaClickeada2: null,
+    esperar: false,
+    exitosRestantes: 8,
+    dificultad: 16
+}
+let $memoTest = document.querySelector(".memotest-container")
 
 function nuevoJuego(dif) {
-    $dificultad.classList.add("oculto")
-    $memoTest = document.querySelector(".memotest-container")
     $memoTest.innerHTML = ""
-    $memoTest.classList.remove("oculto")
-    exitosRestantes = dif / 2
     generarTablero(dif)
     shuffle(arrayJuego)
-    let $cartas = document.querySelectorAll(".item")
-    for (let i = 0; i < $cartas.length; i++) { tablero[$cartas[i].id] = arrayJuego[i] }
 }
 
-
-$bienvenida = document.createElement("div")
-$bienvenida.innerText = "Hola!"
-$dificultad = document.querySelector(".dificultad")
-$dificultad.appendChild($bienvenida)
-$input = document.createElement("input");
-$input.type = "text";
-$input.classList.add("hidden")
-$input.setAttribute("onkeydown", "nuevoNombre(event)")
-$dificultad.appendChild($input)
-
-setTimeout(function () { preguntarNombre() }, 600)
-
-function preguntarNombre() {
-    $bienvenida.innerText = "Como prefieres que te llame?"
-    $input.classList.remove("hidden")
+comenzar = function () {
+    nuevoJuego(juego.dificultad)
 }
 
-nuevoNombre = function (event) {
-    if (event.key === "Enter") {
-        nombre = $input.value
-
-        $h1 = document.querySelector('h1')
-        textoH1 = $h1.textContent
-
-        $h1.textContent = `Hola ${nombre}!`
-        document.querySelector("input[value=Reintentar").classList.remove("hidden")
-        $input.classList.add("hidden")
-        let $unDiv = document.createElement("div")
-        $unDiv.id = ("selector-dificultad")
-        $bienvenida.innerText = "Por favor, elija una dificultad:"
-
-        for (let i = 2; i <= 8; i = i + 2) {
-            $radio = document.createElement("input")
-            $radio.type = "radio"
-            $radio.setAttribute("value", `${i*2}`)
-            $radio.name = "dificultad"
-
-            $texto = document.createElement("span")
-            $texto.innerText = ` ${i} x ${i}`
-            $unDiv.appendChild($radio)
-            $unDiv.appendChild($texto)
-        }
-        $dificultad.appendChild($unDiv)
-        document.querySelector("input[type=radio]").checked = true
-        $comenzar = document.createElement("input")
-        $comenzar.type = "button"
-        $comenzar.value = "Comenzar!"
-        $comenzar.setAttribute("onclick", `comenzar()`)
-        $dificultad.appendChild($comenzar)
-
-    }
-}
-
-comenzar = function(){
-    
-    $radios = document.querySelectorAll("input[name=dificultad]")
-    $radios.forEach(function(key){
-        
-        if(key.checked === true) {
-            difficulty = key.value
-            nuevoJuego(difficulty)
-        }
-    })
-    
-}
+comenzar()

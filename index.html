@@ -6,25 +6,26 @@
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
     <title>Memotest!</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
-    <link rel='stylesheet' type='text/css' media='screen' href='main.css'>
+    <link rel='stylesheet' type='text/css' media='screen' href='css/main.css'>
 
 </head>
 
 <body>
     <div class="container">
-        <div class="header"></div>
-        <h1>Steven Universe.memotest!</h1>
-        <div class="sidebar"></div>
-        <div class="sidebar-container">
-            <div>Es un memotest, no se que esperas que diga.</div>
-            <div>Trata de matchear las cosas y no se, manejate.</div>
-            <div>Flexibility, love and trust.</div>
-            <input type="button" class="hidden" value="Reintentar" onclick="nuevoJuego(difficulty)" />
+        <div class="header">
+            <h1>Steven Universe.memotest!</h1>
         </div>
-        <div class="memotest-container oculto"></div>
-        <div class="dificultad"></div>
-    </div>
+        <div class="sidebar">
+            <p>Es un memotest, no se que esperas que diga.</p>
+            <p>Trata de matchear las cosas y no se, manejate.</p>
+            <p>Flexibility, love and trust.</p>
 
+            <input type="button" class="reintentar" value="Reintentar" onclick="nuevoJuego(juego.dificultad)" />
+        </div>
+        <div class="memotest-container">
+        </div>
+    </div>
+    </div>
     <script src='funciones.js'></script>
     <script src='memotest.js'></script>
 
