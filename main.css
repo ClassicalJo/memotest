@@ -67,8 +67,7 @@ img {
     grid-auto-flow: column;
     grid-template-areas: 
     "texto"
-    "input"
-    "comenzar";
+    "input";
     justify-content: center;
     align-content: center;
 }
@@ -108,17 +107,6 @@ input[type = text]{
     margin-top: 0.75em;
 }
 
-span {
-    margin-right: 0.75em;
-    margin-left: -0.1em;
-}
 input[type = text]:focus{
     outline: none;
-}
-
-input[value="Comenzar!"]{
-    grid-area: comenzar;
-    justify-self: center;
-    margin: 0.75em
-
 }

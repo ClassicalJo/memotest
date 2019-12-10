@@ -12,8 +12,6 @@ let cartaClickeada2 = null
 
 let nombre = null
 let dificultad = 16
-let difficulty = 16
-
 
 function nuevoJuego(dif) {
     $dificultad.classList.add("oculto")
@@ -48,12 +46,6 @@ function preguntarNombre() {
 nuevoNombre = function (event) {
     if (event.key === "Enter") {
         nombre = $input.value
-
-        $h1 = document.querySelector('h1')
-        textoH1 = $h1.textContent
-
-        $h1.textContent = `Hola ${nombre}!`
-        document.querySelector("input[value=Reintentar").classList.remove("hidden")
         $input.classList.add("hidden")
         let $unDiv = document.createElement("div")
         $unDiv.id = ("selector-dificultad")
@@ -82,14 +74,11 @@ nuevoNombre = function (event) {
 }
 
 comenzar = function(){
-    
+    let difficulty
     $radios = document.querySelectorAll("input[name=dificultad]")
     $radios.forEach(function(key){
-        
-        if(key.checked === true) {
-            difficulty = key.value
-            nuevoJuego(difficulty)
-        }
+        difficulty = key.value
+        if(key.checked === true) {nuevoJuego(difficulty)}
     })
     
 }
