@@ -149,3 +149,21 @@ function bloquearMouse() {
 function desbloquearMouse() {
     $memoTest.classList.remove("bloquear-mouse")
 }
+
+function preCargarImagenes() {
+    for(let i = 0; i < arguments.length; i++) {
+        new Image().src = preCargarImagenes[i]
+    }
+}
+
+preCargarImagenes(
+    "images/rose.jpg", 
+    "images/amet.png", 
+    "images/bism.png", 
+    "images/lapi.png", 
+    "images/peri.png", 
+    "images/perl.png", 
+    "images/ruby.png", 
+    "images/saph.png", 
+    "images/star.jpg"
+)
