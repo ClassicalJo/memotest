@@ -49,7 +49,7 @@ html {
 
 .sidebar2 {
   grid-area: sidebar2; }
-  .sidebar2 .ad-bar {
+  .sidebar2 .mockup {
     border-radius: 1rem;
     object-fit: cover;
     width: 100%;
